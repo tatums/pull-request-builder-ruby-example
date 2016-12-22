@@ -1,0 +1,14 @@
+#!/bin/bash
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+aws cloudformation update-stack \
+      --stack-name $PROJECT_NAME \
+      --parameters ParameterKey=GithubToken,ParameterValue=$GITHUB_TOKEN \
+                   ParameterKey=ProjectName,ParameterValue=$PROJECT_NAME \
+      --template-body file://$DIR/resources.yaml \
+      --capabilities CAPABILITY_IAM \
+      --capabilities CAPABILITY_NAMED_IAM && \
+
+      aws cloudformation wait stack-update-complete \
+        --stack-name $PROJECT_NAME
