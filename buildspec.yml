@@ -18,3 +18,4 @@ phases:
   post_build:
     commands:
       - echo Build completed on `date`
+      - 'aws sns publish --topic-arn arn:aws:sns:us-east-1:012345678902:pull-request-builder-ruby-example --message "{\"buildId\": \"$CODEBUILD_BUILD_ID\"}"'
